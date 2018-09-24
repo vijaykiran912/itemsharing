@@ -17,13 +17,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @NoArgsConstructor
 @Data
+@EqualsAndHashCode(exclude="userRoles")
 public class User implements UserDetails {
 
 	private static final long serialVersionUID = -954013019036939918L;
@@ -41,6 +44,7 @@ public class User implements UserDetails {
 	private String password;
 
 	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Set<UserRole> userRoles = new HashSet<>();
 
 	@Override

@@ -9,13 +9,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "user_role")
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode(exclude= {"role", "user"})
 public class UserRole {
 
 	@Id
@@ -27,6 +31,7 @@ public class UserRole {
 	private User user;
 
 	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "role_id")
 	private Role role;
 
 	public UserRole(User user, Role role) {
