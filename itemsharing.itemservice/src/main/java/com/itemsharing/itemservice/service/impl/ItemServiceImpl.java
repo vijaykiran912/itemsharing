@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.itemsharing.itemservice.model.Item;
 import com.itemsharing.itemservice.model.User;
@@ -15,6 +16,7 @@ import com.itemsharing.itemservice.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 public class ItemServiceImpl implements ItemService {
 
 	@Autowired
@@ -46,38 +48,48 @@ public class ItemServiceImpl implements ItemService {
 
 	@Override
 	public List<Item> getAllItems() {
-		// TODO Auto-generated method stub
-		return null;
+		return (List<Item>) itemRepository.findAll();
 	}
 
 	@Override
 	public List<Item> getItemsByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		User user = userService.getUserByUsername(username);
+		return (List<Item>) itemRepository.findByUser(user);
 	}
 
 	@Override
 	public Item getItemById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return itemRepository.findOne(id);
 	}
 
 	@Override
 	public Item updateItem(Item item) throws IOException {
-		// TODO Auto-generated method stub
-		return null;
+
+		Item localItem = getItemById(item.getId());
+
+		if (localItem == null) {
+			throw new IOException("Item was not found");
+		} else {
+
+			localItem.setName(item.getName());
+			localItem.setItemCondition(item.getItemCondition());
+			localItem.setStatus(item.getStatus());
+			localItem.setDescription(item.getDescription());
+			return itemRepository.save(localItem);
+
+		}
+
 	}
 
 	@Override
 	public void deleteItemById(Long id) {
-		// TODO Auto-generated method stub
+		itemRepository.delete(id);
 
 	}
 
 	@Override
 	public User getUserByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		return userService.getUserByUsername(username);
 	}
 
 }
