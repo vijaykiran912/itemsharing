@@ -1,13 +1,12 @@
-package com.itemsharing.userservice;
+package com.itemsharing.itemservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class UserserviceApplication {
+public class ItemServiceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(UserserviceApplication.class, args);
+		SpringApplication.run(ItemServiceApplication.class, args);
 	}
-
 }
